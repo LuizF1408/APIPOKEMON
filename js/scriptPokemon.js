@@ -19,7 +19,14 @@ function pesquisaPokemon() {
     console.log(pesquisa)
 
     axios.get(`https://pokeapi.co/api/v2/pokemon/${pesquisa}`)
+    
         .then((resposta) => {
+            if(resposta.data === []){
+                window.alert("Você não escolheu um Pokémon ");
+
+            }
+            else{
+
             pokemon = resposta.data
             console.log(pokemon)
             var nome = pokemon.name
@@ -82,6 +89,7 @@ document.getElementById("sprite").src = salvaPokemon.sprite
 
 
             console.log(salvaPokemon)
+        }
         })
 
         .catch((erro) => {
