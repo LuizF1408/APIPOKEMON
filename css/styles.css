@@ -10371,7 +10371,7 @@ p {
   color:white
 }
 .bgsec{
-  background-image: url("/assets/img/Shield.jpg");
+  background-image: url("../assets/img/Shield.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
