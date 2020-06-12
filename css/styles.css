@@ -83,6 +83,7 @@ hr {
 h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
   margin-bottom: 0.5rem;
+  
 }
 
 p {
@@ -10365,8 +10366,7 @@ body {
   padding: 5rem 0;
 }
 
-p {
-
+.p {
 
   color:white
 }
@@ -10376,3 +10376,21 @@ p {
   background-attachment: fixed;
   background-size: cover;
 }
+.loren{
+    float:right; /*<---*/
+    width: 50%;
+  
+}
+.ipsulum{
+    float:center; /*<---*/
+    width: 50%;
+  }
+  .loren2{
+    float:right; /*<---*/
+    width: 50%;
+}
+.carousel-inner > .item > img,
+  .carousel-inner > .item > a > img {
+    width: 70%;
+    margin: auto;
+  }

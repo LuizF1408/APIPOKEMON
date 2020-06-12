@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="utf-8" />
@@ -17,9 +17,37 @@
         rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <style>
+        .ui-autocomplete {
+            max-height: 350px;
+            overflow-y: auto;
+            /* prevent horizontal scrollbar */
+            overflow-x: hidden;
+        }
+
+        /* IE 6 doesn't support max-height
+         * we use height instead, but this forces the menu to always be this tall
+         */
+        * html .ui-autocomplete {
+            height: 350px;
+        }
+
+        .ui-menu img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .ui-menu li span {
+            font-size: 1.5em;
+            padding: 0 0 5px 5px;
+            margin: 0 0 15px 0 !important;
+            white-space: nowrap;
+        }
+    </style>
 </head>
 
-<body id="page-top">
+<body id="page-top" onload="geraListagem()">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
         <div class="container">
@@ -29,9 +57,12 @@
                 aria-label="Toggle navigation">Menu<i class="fas fa-bars"></i></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="https://github.com/LuizF1408"target="_blank">GitHub</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="https://www.linkedin.com/in/luizf1408"target="_blank">Linkedin</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="https://www.arbyte.com.br/"target="_blank">Arbyte</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="https://github.com/LuizF1408"
+                            target="_blank">GitHub</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger"
+                            href="https://www.linkedin.com/in/luizf1408" target="_blank">Linkedin</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="https://www.arbyte.com.br/"
+                            target="_blank">Arbyte</a></li>
                 </ul>
             </div>
         </div>
@@ -42,35 +73,61 @@
 
             <div class="mx-auto text-center">
 
-                <h1 class=" my-0 text-uppercase" >Pokédex</h1>
-                <input id="caixaDeTexto" type="text" class="mt-10 mb-10 form-control" placeholder="Digite o nome ou numero Pokémon" aria-label="Digite o nome ou numero Pokémon "
-                    aria-describedby="basic-addon2">
+                <h1 class=" my-0 text-uppercase">Pokédex</h1>
+                <input id="caixaDeTexto" type="text" onclick="organizaListagem()" onkeydown="organizaListagem()"
+                    class="mt-10 mb-10 form-control" placeholder="Digite o nome ou numero Pokémon"
+                    aria-label="Digite o nome ou numero Pokémon " aria-describedby="basic-addon2">
 
 
-                <a class="mb-10 mt-10 btn btn-primary js-scroll-trigger" onclick="pesquisaPokemon()" href="#sprite">Eu escolho você !</a>
+                <a class="mb-10 mt-10 btn btn-primary js-scroll-trigger"
+                    onclick="pesquisaPokemon();verificaCaixaDeTexto()" href="#sprite">Eu
+                    escolho você !</a>
             </div>
-            
-    
+
+
 
         </div>
-        
+
     </header>
-    <div class=" mb-70 mt-4 text-center container bgsec" >
+    <div class=" mb-70 mt-4 text-center bgsec">
         <div class="text-center">
-            <img id="sprite" src="./assets/img/bgtransp.png" width="250"
-                height="250">
+            <img id="sprite" src="./assets/img/bgtransp.png" width="250" height="250">
         </div>
-        <div class="text-center" id="name">
+        <div class="text-center p" id="name">
             <p></p>
         </div>
-        <div class="text-center" id="type">
+        <div class="text-center p" id="type">
             <p></p>
         </div>
-        <div class="text-center" id="skill">
-            <p> </p>
+        <div class="text-center p" id="skill">
+            <p></p>
         </div>
     </div>
 
+    <div class=" text-center">
+        <h1 >Pokemons Semelhantes</h1>
+        <div class="row">
+
+            <div class="col-sm loren bgsec">
+
+                <img id="desc1" src="/assets/img/pokeball.jpg " width="250" height="250 ">
+                <p>Pokemon1</p>
+            </div>
+            <div class="col-sm loren bgsec">
+
+                <img id="desc2" src="/assets/img/pokeball.jpg" width="250" height="250">
+                <p>Pokemon2</p>
+
+            </div>
+            <div class="col-sm loren bgsec">
+
+                <img id="desc3" src="/assets/img/pokeball.jpg" width="250" height="250">
+                <p>Pokemon3</p>
+
+            </div>
+        </div>
+
+    </div>
 
 
 
@@ -79,7 +136,7 @@
     <!-- Footer-->
     <div class="mx auto footer-copyright text-center py-0">© 2020 Copyright:
         <a href="https://www.linkedin.com/in/luizf1408" target="_blank"> Designed By: Luiz F</a>
-      </div>
+    </div>
     </footer>
     <!-- Bootstrap core JS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -90,6 +147,8 @@
     <script src="js/scripts.js"></script>
     <script src="js/scriptPokemon.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </body>
 
 </html>
