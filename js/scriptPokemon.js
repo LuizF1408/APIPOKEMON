@@ -1,8 +1,12 @@
+var input = document.getElementById("caixaDeTexto");
+input.addEventListener("keyup",function(event) {
+    if (event.keyCode === 13) {
+     
+ document.getElementById("btn").click()
+ ;}});
 
 
-
-
-const capitalize = (s) => {
+ const capitalize = (s) => {
     if (typeof s !== 'string') return ''
     return s.charAt(0).toUpperCase() + s.slice(1)
 }
@@ -183,4 +187,3 @@ $(function () {
             return $(`<li><div><img src=${item.img}><span> N° ${item.num} - </span><span>${item.value}</span></div></li>`).appendTo(ul);
         };
 })
-
