@@ -1,12 +1,19 @@
 var input = document.getElementById("caixaDeTexto");
-input.addEventListener("keyup",function(event) {
+input.addEventListener("keyup", function (event) {
     if (event.keyCode === 13) {
-     
- document.getElementById("btn").click()
- ;}});
 
+        document.getElementById("btn").click()
+            ;
+    }
+});
 
- const capitalize = (s) => {
+function resetador() {
+    var input = document.querySelector('#caixaDeTexto')
+    input.value = "";
+    input.focus();
+}
+
+const capitalize = (s) => {
     if (typeof s !== 'string') return ''
     return s.charAt(0).toUpperCase() + s.slice(1)
 }
@@ -57,8 +64,10 @@ function verificaCaixaDeTexto() {
 
 var pokemon
 var skil = []
-var tiposDoPokemon = []
+
 var salvaPokemon = {}
+var pesquisaDePokemons = []
+var pesquisaDePokemonsNomes = []
 
 
 function pesquisaPokemon() {
@@ -69,71 +78,93 @@ function pesquisaPokemon() {
     axios.get(`https://pokeapi.co/api/v2/pokemon/${pesquisa}`)
 
         .then((resposta) => {
-           
+
+
+            pokemon = resposta.data
+            console.log(pokemon)
+            var nome = pokemon.name
+            pesquisaDePokemonsNomes.push(nome)
+
+            console.log('Nome do Pokemon:' + nome)
+
+            salvaPokemon.nome = nome
+
+            document.getElementById("name").innerHTML = `<button type="button" class="btn btn-outline-primary" style="background-color:#101010">Pokemon : ${capitalize(pokemon.name)}</button> `
+            salvaPokemon.id = pokemon.id.toString()
+            if (salvaPokemon.id.length == 1) { salvaPokemon.id = `00${salvaPokemon.id}` }
+            if (salvaPokemon.id.length == 2) { salvaPokemon.id = `0${salvaPokemon.id}` }
+            salvaPokemon.sprite = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${salvaPokemon.id}.png`
+            document.getElementById("sprite").src = salvaPokemon.sprite
+
             
-                pokemon = resposta.data
-                console.log(pokemon)
-                var nome = pokemon.name
+            pesquisaDePokemons.push(salvaPokemon.sprite)
+            
+            
+            if (pesquisaDePokemons.length <=3){
+            document.getElementById("desc1").src = pesquisaDePokemons[0]
+            document.getElementById("ndesc1").innerHTML = `<button type="button" class="btn btn-outline-primary" style="background-color:#101010">Pokemon : ${capitalize(pesquisaDePokemonsNomes[0])}</button> `
+            
+            
+            document.getElementById("desc2").src = pesquisaDePokemons[1]
+            document.getElementById("ndesc2").innerHTML = `<button type="button" class="btn btn-outline-primary" style="background-color:#101010">Pokemon : ${capitalize(pesquisaDePokemonsNomes[1])}</button> `
 
-                console.log('Nome do Pokemon:' + nome)
-
-                salvaPokemon.nome = nome
-                document.getElementById("name").innerText = `Pokemon : ${capitalize(pokemon.name)}`
-                salvaPokemon.id = pokemon.id.toString()
-                if (salvaPokemon.id.length == 1) { salvaPokemon.id = `00${salvaPokemon.id}` }
-                if (salvaPokemon.id.length == 2) { salvaPokemon.id = `0${salvaPokemon.id}` }
-                salvaPokemon.sprite = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${salvaPokemon.id}.png`
-                document.getElementById("sprite").src = salvaPokemon.sprite
-                document.getElementById("desc1").src = salvaPokemon.sprite
-                document.getElementById("desc2").src = salvaPokemon.sprite
-                document.getElementById("desc3").src = salvaPokemon.sprite
-
-
-
-                var listaDeSkill = []
-                var habilidades = pokemon.abilities
-                habilidades.forEach(habilidades => {
+            document.getElementById("desc3").src = pesquisaDePokemons[2]
+            document.getElementById("ndesc3").innerHTML= `<button type="button" class="btn btn-outline-primary" style="background-color:#101010">Pokemon : ${capitalize(pesquisaDePokemonsNomes[2])}</button> `
+            }
+            else{}
 
 
 
-                    var nskill = habilidades.ability.name
-                    var urlSkill = `https://pokeapi.co/api/v2/ability/${nskill}`
-                    var descriSkill = ""
-                    axios.get(urlSkill)
-                        .then((resposta) => {
-                            for (var i = 0; i < resposta.data.effect_entries.length; i++) {
-                                if (resposta.data.effect_entries[i].language.name == "en") {
-                                    var retornoDaAbilitiy = resposta.data.effect_entries[i].short_effect
-                                }
+            var listaDeSkill = []
+            var habilidades = pokemon.abilities
+            habilidades.forEach(habilidades => {
+
+
+
+                var nskill = habilidades.ability.name
+                var urlSkill = `https://pokeapi.co/api/v2/ability/${nskill}`
+                var descriSkill = ""
+                axios.get(urlSkill)
+                    .then((resposta) => {
+                        for (var i = 0; i < resposta.data.effect_entries.length; i++) {
+                            if (resposta.data.effect_entries[i].language.name == "en") {
+                                var retornoDaAbilitiy = resposta.data.effect_entries[i].short_effect
                             }
-                            descriSkill = retornoDaAbilitiy
-                            listaDeSkill.push(`Habilidade: ${nskill} Efeito: ${descriSkill}`)
-                            document.getElementById("skill").innerHTML = `${listaDeSkill.join("\n")}<br>`
-
-                        })
-
-
-                });
-                salvaPokemon.skill = listaDeSkill
-
-                console.log('***Habilidades do Pokemon***\n' + skil.join("\n"))
+                        }
+                        descriSkill = retornoDaAbilitiy
+                        listaDeSkill.push(`Habilidade: ${nskill} Efeito: ${descriSkill}`)
+                        document.getElementById("skill").innerHTML = `<button type="button" class="btn btn-outline-primary" style="background-color:#101010">${listaDeSkill.join("<br>")}</button>`
 
 
-                var tipos = pokemon.types
-                tipos.forEach(tipos => {
-                    tiposDoPokemon.push(tipos.type.name)
-                    salvaPokemon.type = tiposDoPokemon
+                    })
 
 
-                })
-                document.getElementById("type").innerText = `Tipos: ${capitalize(salvaPokemon.type.join(", "))}`
+            });
+            salvaPokemon.skill = listaDeSkill
 
-                console.log('***Tipos do Pokemon***\n' + tiposDoPokemon.join('\n'))
+            console.log('***Habilidades do Pokemon***\n' + skil.join("\n"))
 
 
-                console.log(salvaPokemon)
+            var tipos = pokemon.types
+            var tiposDoPokemon = []
+            tipos.forEach(tipos => {
+                tiposDoPokemon.push(tipos.type.name)
+                salvaPokemon.type = tiposDoPokemon
+            
+
+
 
             })
+            document.getElementById("type").innerHTML = `<button type="button" class="btn btn-outline-primary "style="background-color:#101010">Tipos: ${capitalize(salvaPokemon.type.join(", "))}</button>`
+
+            console.log('***Tipos do Pokemon***\n' + tiposDoPokemon.join('\n'))
+
+
+            console.log(salvaPokemon)
+
+
+
+        })
 
         .catch((erro) => {
             console.log(erro)
