@@ -60,6 +60,7 @@ function verificaCaixaDeTexto() {
     if (document.getElementById("caixaDeTexto").value == false) {
         alert("Insira um pokemon")
     }
+    else { pesquisaPokemon() }
 }
 
 var pokemon
@@ -74,10 +75,12 @@ function pesquisaPokemon() {
     var texto = document.getElementById('caixaDeTexto')
     var pesquisa = texto.value.toLowerCase()
     console.log(pesquisa)
+    resetador()
 
     axios.get(`https://pokeapi.co/api/v2/pokemon/${pesquisa}`)
 
         .then((resposta) => {
+
 
 
             pokemon = resposta.data
@@ -96,24 +99,34 @@ function pesquisaPokemon() {
             salvaPokemon.sprite = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${salvaPokemon.id}.png`
             document.getElementById("sprite").src = salvaPokemon.sprite
 
-            
+
             pesquisaDePokemons.push(salvaPokemon.sprite)
-            
-            
-            if (pesquisaDePokemons.length <=3){
-            document.getElementById("desc1").src = pesquisaDePokemons[0]
-            document.getElementById("ndesc1").innerHTML = `<button type="button" class="btn btn-outline-primary" style="background-color:#101010">Pokemon : ${capitalize(pesquisaDePokemonsNomes[0])}</button> `
-            
-            
-            document.getElementById("desc2").src = pesquisaDePokemons[1]
-            document.getElementById("ndesc2").innerHTML = `<button type="button" class="btn btn-outline-primary" style="background-color:#101010">Pokemon : ${capitalize(pesquisaDePokemonsNomes[1])}</button> `
+            if (pesquisaDePokemons.length > 3) {
+                pesquisaDePokemons.shift()
+                pesquisaDePokemonsNomes.shift()
 
-            document.getElementById("desc3").src = pesquisaDePokemons[2]
-            document.getElementById("ndesc3").innerHTML= `<button type="button" class="btn btn-outline-primary" style="background-color:#101010">Pokemon : ${capitalize(pesquisaDePokemonsNomes[2])}</button> `
             }
-            else{}
 
 
+
+            if (pesquisaDePokemons[0]) {
+                document.getElementById("desc1").src = pesquisaDePokemons[0]
+                document.getElementById("ndesc1").innerHTML = `<button type="button" class="btn btn-outline-primary" style="background-color:#101010">Pokemon : ${capitalize(pesquisaDePokemonsNomes[0])}</button> `
+            }
+            if (pesquisaDePokemons[1]) {
+                document.getElementById("desc2").src = pesquisaDePokemons[1]
+                document.getElementById("ndesc2").innerHTML = `<button type="button" class="btn btn-outline-primary" style="background-color:#101010">Pokemon : ${capitalize(pesquisaDePokemonsNomes[1])}</button> `
+
+            }
+            if (pesquisaDePokemons[2]) {
+                document.getElementById("desc3").src = pesquisaDePokemons[2]
+                document.getElementById("ndesc3").innerHTML = `<button type="button" class="btn btn-outline-primary" style="background-color:#101010">Pokemon : ${capitalize(pesquisaDePokemonsNomes[2])}</button> `
+            }
+
+
+
+
+           
 
             var listaDeSkill = []
             var habilidades = pokemon.abilities
@@ -150,7 +163,7 @@ function pesquisaPokemon() {
             tipos.forEach(tipos => {
                 tiposDoPokemon.push(tipos.type.name)
                 salvaPokemon.type = tiposDoPokemon
-            
+
 
 
 
@@ -204,7 +217,9 @@ $(function () {
             event.preventDefault();
             // place the person.given_name value into the textfield called 'select_origin'...
             $('#caixaDeTexto').val(ui.item.label);
-            pesquisaPokemon()
+            document.getElementById("btn").click()
+           
+           
             // ... any other tasks (like setting Hidden Fields) go here...
         },
         html: true,
@@ -218,3 +233,12 @@ $(function () {
             return $(`<li><div><img src=${item.img}><span> N° ${item.num} - </span><span>${item.value}</span></div></li>`).appendTo(ul);
         };
 })
+
+function damage() {
+    var relaDanos = []
+    pokemon.types.forEach(type => relaDanos.push(type.url))
+    console.log("DANOS",relaDanos)
+
+
+
+}

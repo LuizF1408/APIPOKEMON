@@ -80,7 +80,7 @@
 
 
                 <a id ="btn" class="mb-10 mt-10 btn btn-primary js-scroll-trigger"
-                    onclick="pesquisaPokemon();verificaCaixaDeTexto()" href="#sprite">Eu
+                    onclick="verificaCaixaDeTexto();" href="#sprite">Eu
                     escolho você !</a>
             </div>
 
@@ -106,25 +106,29 @@
     </div>
     </div>
 
-    <div class=" text-center">
-        <h1 >Pokemons Pesquisados</h1>
+    <div class=" text-center my-xl-auto">
+        
+        <a type="button" class="btn btn-secondary btn-lg btn-block" href="#pesq" >Pokemons Pesquisados</a>
+       
+    
         <div class="row">
 
-            <div class="col-sm loren bgsec">
+            <div id="pesq" class="col-sm loren bgsec">
 
                 <img id="desc1" src="./assets/img/Logo.png " width="250" height="250 ">
-                <p id="ndesc1">Pokemon1</p>
+                <p id="ndesc1"></p>
+                
             </div>
             <div class="col-sm loren bgsec">
 
                 <img id="desc2" src="./assets/img/Logo.png" width="250" height="250">
-                <p id="ndesc2">Pokemon2</p>
+                <p id="ndesc2"></p>
 
             </div>
             <div class="col-sm loren bgsec">
 
                 <img id="desc3" src="./assets/img/Logo.png" width="250" height="250">
-                <p id="ndesc3">Pokemon3</p>
+                <p id="ndesc3"></p>
 
             </div>
         </div>
